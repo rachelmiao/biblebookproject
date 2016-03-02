@@ -30,21 +30,21 @@ def main():
     outfile.write('\n' + book.title() + ' ' + str(i+1) + '\n\n')  # chapter heading
     verses = chapters[str(i+1)]['chapter']
     for j in range(len(verses)):
-      raw = verses[str(j+1)]['verse']
+      verse = verses[str(j+1)]['verse']
 
       # We need to treat ascii and non-ascii files differently
       try:
-        raw.encode('ascii')
+        verse.encode('ascii')
       except UnicodeError:
         # not ascii
-        encoded = raw.encode('utf-8')
+        verse = verse.encode('utf-8')
+
+        # chinese scripts have extra spacing, so remove
         if version == 'cus' or version == 'cns':
-          encoded = encoded.replace(' ', '')
-          encoded = encoded.strip()
-        outfile.write('%s\n' % encoded)
-      else:
-        # ascii
-        outfile.write(raw + '\n')
+          verse = verse.replace(' ', '')
+          verse = verse.strip()
+        
+      outfile.write('%s\n' % verse)
 
   print 'Success! Goodbye.'
   outfile.close()
