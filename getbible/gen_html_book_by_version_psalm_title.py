@@ -37,13 +37,15 @@ def main():
   for i in range(len(chapters)):
     # New chapter
     psalmsTitle = u'\u8BD7\u7BC7'
-    outfile.write('<br><br><b>%s ' % psalmsTitle)
+    outfile.write('<br><b>%s ' % psalmsTitle)
     outfile.write(str(i+1) + '</b><br><br>')  # chapter heading
     verses = chapters[str(i+1)]['chapter']
     for j in range(len(verses)):
       verse = verses[str(j+1)]['verse']
       if options.newlines == True:
         verse = verse + '<br>'
+      elif j == len(verses) - 1:
+        outfile.write('<br>')
       outfile.write(verse)
 
   print 'Success! Goodbye.'
