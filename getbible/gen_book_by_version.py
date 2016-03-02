@@ -5,15 +5,22 @@
 
 import sys
 import urllib, json
+from optparse import OptionParser
 
 def main():
-  if (len(sys.argv) < 3):
-    print 'ERROR: Not enough arguments'
+  parser = OptionParser()
+  parser.add_option('-n', '--newlines', action='store_true', dest='newlines',
+                    help='Whether to have line breaks after every verse')
+  (options, args) = parser.parse_args()
+
+  if len(args) != 2:
+    print len(args)
+    print 'ERROR: Incorrect number of arguments'
     print 'Usage: python gen_book_by_version.py [book] [version]'
     quit()
 
-  book = sys.argv[1].lower()
-  version = sys.argv[2].lower()
+  book = args[0].lower()
+  version = args[1].lower()
   filename = book + '_' + version + '.txt'
 
   print 'Generating the book of ' + book + ' in the version ' + version
@@ -27,7 +34,7 @@ def main():
 
   for i in range(len(chapters)):
     # New chapter
-    outfile.write('\n' + book.title() + ' ' + str(i+1) + '\n\n')  # chapter heading
+    outfile.write('\n\n' + book.title() + ' ' + str(i+1) + '\n\n')  # chapter heading
     verses = chapters[str(i+1)]['chapter']
     for j in range(len(verses)):
       verse = verses[str(j+1)]['verse']
@@ -43,8 +50,10 @@ def main():
         if version == 'cus' or version == 'cns':
           verse = verse.replace(' ', '')
           verse = verse.strip()
-        
-      outfile.write('%s\n' % verse)
+      
+      if options.newlines == True:
+        verse = verse + '\n'
+      outfile.write('%s' % verse)
 
   print 'Success! Goodbye.'
   outfile.close()
