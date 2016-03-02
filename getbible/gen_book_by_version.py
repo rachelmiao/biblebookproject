@@ -1,6 +1,7 @@
 # Generates specified book in specified version
 # List of versions found at getbible.net/api
 # Script usage: python gen_book_by_version.py [book] [version]
+# Written by Rachel Miao
 
 import sys
 import urllib, json
