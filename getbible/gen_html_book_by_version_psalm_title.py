@@ -45,7 +45,7 @@ def main():
       if options.newlines == True:
         verse = verse + '<br>'
       elif j == len(verses) - 1:
-        outfile.write('<br>')
+        verse = verse + '<br>'
       outfile.write(verse)
 
   print 'Success! Goodbye.'
